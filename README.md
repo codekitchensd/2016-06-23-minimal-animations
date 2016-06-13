@@ -23,6 +23,15 @@ Not animations, but would be great as animations
 <img src="http://67.media.tumblr.com/432e1b5b304cd388442a7a869379bd46/tumblr_nj7pwdlGBr1tf7qzao1_500.gif" width="350">
 
 
+## Getting Started
+
+https://p5js.org/get-started/
+
+## Next Steps
++ Simple animation loop
++ Sine based animations
++ Make it more complex
++ GIF it!
 
 
 ### Code Example - Save
