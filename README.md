@@ -34,6 +34,13 @@ https://p5js.org/get-started/
 + GIF it!
 
 
+### GIF output
+Need to use simple HTTP server so GIFs can work
+
+    $ python -m SimpleHTTPServer
+
+
+
 ### Code Example - Save
 
 ```javascript
