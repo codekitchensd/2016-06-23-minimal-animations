@@ -26,7 +26,7 @@ Not animations, but would be great as animations
 ## Getting Started
 
 + Copy template example `examples/00-template` into a new directory
-+ `cd` into your new directory and start a new server `python -m SimpleHTTPServer`
++ `cd` into your new directory and start a new server `python -m SimpleHTTPServer` and point your browser to http://localhost:8000
   + or simply open `index.html` in your web browser (GIF export will not work in this case)
 + Fill out methods `prepare()` and `drawFrame()` with your custom animation
 + ...
