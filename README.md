@@ -25,33 +25,23 @@ Not animations, but would be great as animations
 
 ## Getting Started
 
-https://p5js.org/get-started/
++ Copy template Example `examples/00-template`
++ `cd` over to and start your server (optional)
+  + open index.html
++ Fill out methods `prepare()` and `drawFrame()`
++ ...
++ Profit!
 
-## Next Steps
-+ Simple animation loop
-+ Sine based animations
-+ Make it more complex
-+ GIF it!
-
-
-### GIF output
-Need to use simple HTTP server so GIFs can work
-
-    $ python -m SimpleHTTPServer
-
-
-
-### Code Example - Save
+## 01 - Simple Animation
+Discuss how to code a scalable/time stretchable animation
 
 ```javascript
-var r = new Rune({
-  container: "body",
-  width: 500,
-  height: 400
-});
-
-r.rect(0, 0, 200, 200)
-  .fill(0, 0, 255);
-
-r.draw();
+function drawFrame(perc) {
+  background(backColor);
+}
 ```
+
+### GIF output
+Need to use simple HTTP server so GIFs can work - workers don't work from file://
+
+    $ python -m SimpleHTTPServer
