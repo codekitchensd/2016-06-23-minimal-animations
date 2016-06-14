@@ -4,7 +4,7 @@
 
 //== animation timing ==
 var framesPerSecond = 30;
-var numFrames = 3*framesPerSecond; // 3 seconds
+var numFrames = 2*framesPerSecond; // 2 seconds
 
 //== animation tuning params ==
 var backColor = "#000000";
@@ -19,6 +19,8 @@ function prepare() {
   // animation code
   // very important for GIF output, since it doesn't match visual output
   radius = width * 0.1; // bouncy ball is 20% size of frame
+
+  console.log(width);
 
   // determine how high we want the ball to bounce
   // how does 80% of the frame sound?
@@ -60,6 +62,8 @@ function drawFrame(perc) {
 //==========================================================
 // state
 var fCount = 0; // base animation on frame count
+var rendering = false; // are we generating a GIF?
+var rFCount = 0; // rendering frame count
 
 // UI refs
 var ctx;
@@ -79,18 +83,42 @@ function setup() {
 }
 
 function draw() {
-  // animation loop control
-  fCount++; // have to store our own frame count since we can't reset p5s :(
-  if (fCount > numFrames) fCount = 0; // loop animation
+  if (rendering) {
 
-  // update timeline
-  timeline.style.width = (fCount/numFrames) * 100 + "%";
+    // == GIF RENDERING ==
+    // update timeline
+    timeline.style.width = (rFCount/numFrames) * 100 + "%";
 
-  // animation timing is based on number of frames
-  // map() is a great function to time animations
-  // we use it here to determine the percentage of the animation we are at
-  var perc = map(fCount, 0, numFrames, 0, 1.0);
-  drawFrame(perc);
+    // base animation on seperate frame count
+    var perc = map(rFCount, 0, numFrames, 0, 1.0);
+    drawFrame(perc);
+
+    gif.addFrame(ctx.elt, {delay:(1.0/framesPerSecond)*1000, copy: true});
+
+    rFCount++;
+    if (rFCount > numFrames) {
+      // complete
+      noLoop(); // stop animation and wait for render to complete
+      gif.render();
+    }
+
+  } else {
+
+    // == MAIN ANIMATION LOOP ==
+    // animation loop control
+    fCount++; // have to store our own frame count since we can't reset p5s :(
+    if (fCount > numFrames) fCount = 0; // loop animation
+
+    // update timeline
+    timeline.style.width = (fCount/numFrames) * 100 + "%";
+
+    // animation timing is based on number of frames
+    // map() is a great function to time animations
+    // we use it here to determine the percentage of the animation we are at
+    var perc = map(fCount, 0, numFrames, 0, 1.0);
+    drawFrame(perc);
+
+  }
 }
 
 function bindPlayerButtons() {
@@ -125,51 +153,49 @@ function bindPlayerButtons() {
   var exportToast = document.getElementById('export-toast');
   exportButton.onclick = function(e) {
     e.preventDefault();
-    noLoop();
     exportButton.style.display = 'none';
     exportToast.style.display = 'block';
-    renderGIF(function() {
-      loop();
-      exportButton.style.display = 'inline';
-      exportToast.style.display = 'none';
-    });
+    noLoop();
+    setTimeout(function() { // wait for animation to stop
+      renderGIF(function() {
+        exportButton.style.display = 'inline';
+        exportToast.style.display = 'none';
+      });
+    }, 100);
   };
 }
 
+var gif;
 function renderGIF(completion) {
   // trickiest part in the script
   // generates a gif by running through the animation code frame-by-frame
   // and saving to a GIF image.
-  var gif = new GIF({
+  gif = new GIF({
     workers: 2,
     quality: 10,
-    width: 640,
-    height: 640,
+    width: 320,
+    height: 320,
   });
   gif.on('finished', function(blob) {
     window.open(URL.createObjectURL(blob));
 
     // reset and complete
+    rendering = false;
     resizeCanvas(640, 640);
     prepare(); // let user code reconfigure back to original
-    completion();
+    setTimeout(function() { // wait a bit to restart animation
+      loop();
+      completion();
+    }, 100);
   });
   gif.on('progress', function(p) {
-    console.log(p);
     timeline.style.width = p * 100 + "%";
   });
 
   // resize canvas and prep animation
-  var rFCount = 0;
-  // resizeCanvas(640, 640);
-  // prepare(); // let user code refigure its settings based on new canvas
-
-  // render all frames as fast as posible
-  while (rFCount <= numFrames) {
-    var perc = map(rFCount++, 0, numFrames, 0, 1.0);
-    drawFrame(perc);
-    gif.addFrame(ctx.elt, {delay:1.0/frameRate, copy: true});
-  }
-
-  gif.render();
+  rFCount = 0;
+  resizeCanvas(320, 320);
+  rendering = true; // tell main animation loop to do renders instead
+  prepare(); // let user code refigure its settings based on new canvas
+  loop();
 }
