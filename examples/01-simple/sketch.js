@@ -125,6 +125,7 @@ function bindPlayerButtons() {
   var rewind = document.getElementById('rewind');
   rewind.onclick = function(e) {
     e.preventDefault();
+    fCount = 0;
   };
 
   // pause

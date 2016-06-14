@@ -10,15 +10,17 @@ var numFrames = 4 * framesPerSecond;
 var backColor = "#ffffff";
 var foreColor = "#222222";
 var rows = 12;
-var side = 42;
+var side;
 var space = 2;
-var thick = 12;
 
 //== Animation Setup ==
 function prepare() {
   noStroke();
   fill(foreColor);
   rectMode(CENTER);
+
+  // make cell size relative to frame width
+  side = (int)(width*0.0666);
 }
 
 //== Single Animation Frame ==
@@ -26,10 +28,8 @@ function drawFrame(perc) {
   background(backColor);
 
   var cell = side + space; // a cell considers its padding
-  // determine cell offset by spacing all cells out evenly
-
+  // determine amount needed to inset animation (nice border)
   var offset = width - ((rows - 1) * side + (rows - 1) * space);
-
   translate(offset/2, offset/2);
 
   var off = perc * TWO_PI;
@@ -126,6 +126,7 @@ function bindPlayerButtons() {
   var rewind = document.getElementById('rewind');
   rewind.onclick = function(e) {
     e.preventDefault();
+    fCount = 0;
   };
 
   // pause
