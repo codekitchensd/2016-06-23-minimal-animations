@@ -1,28 +1,19 @@
 /*
- * Simple bouncy ball animation
+ * p5.js animation template
  */
 
 //== animation timing ==
 var framesPerSecond = 30;
-var numFrames = 2*framesPerSecond; // 2 seconds
+var numFrames = 5*framesPerSecond; // 5 seconds
 
 //== animation tuning params ==
 var backColor = "#000000";
 var foreColor = "#ffffff";
 var radius;
-var bounceHeight;
 
 //== Animation Setup ==
 function prepare() {
-  // make animation parameters relative to frame size
-  // this allows the frame size to change without having to update your
-  // animation code
-  // very important for GIF output, since it doesn't match visual output
-  radius = width * 0.1; // bouncy ball is 20% size of frame
-
-  // determine how high we want the ball to bounce
-  // how does 80% of the frame sound?
-  bounceHeight = (height - radius*2.0) * .80; // figure in size of ball
+  radius = width * 0.1;
 
   // prep drawing commands
   fill(foreColor); // fill the ball with this color
@@ -34,16 +25,11 @@ function drawFrame(perc) {
   // clear frame - p5.js doesn't automatically do this for you
   background(backColor);
 
-  // determine position of bouncy ball
-  // use animation percentage to determine radius: 0 - PI
-  // remember upwards is backwards ;)
-  var hOffset = -bounceHeight * sin(PI*perc);
-
   // move to bottom of screen
-  translate(width/2, height-radius);
+  translate(width/2, height/2);
 
   // draw circle - width is diameter (2 x radius)
-  ellipse(0, hOffset, radius*2.0, radius*2.0);
+  ellipse(0, 0, radius*2.0, radius*2.0);
 }
 
 

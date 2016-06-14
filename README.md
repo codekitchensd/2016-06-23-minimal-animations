@@ -25,10 +25,10 @@ Not animations, but would be great as animations
 
 ## Getting Started
 
-+ Copy template Example `examples/00-template`
-+ `cd` over to and start your server (optional)
-  + open index.html
-+ Fill out methods `prepare()` and `drawFrame()`
++ Copy template example `examples/00-template` into a new directory
++ `cd` into your new directory and start a new server `python -m SimpleHTTPServer`
+  + or simply open `index.html` in your web browser (GIF export will not work in this case)
++ Fill out methods `prepare()` and `drawFrame()` with your custom animation
 + ...
 + Profit!
 
@@ -38,10 +38,12 @@ Discuss how to code a scalable/time stretchable animation
 ```javascript
 function drawFrame(perc) {
   background(backColor);
+
+  // ....
 }
 ```
 
-### GIF output
-Need to use simple HTTP server so GIFs can work - workers don't work from file://
+### A note on GIF output
+Need to use simple HTTP server so GIFs can work - web workers don't work from `file://`
 
     $ python -m SimpleHTTPServer
