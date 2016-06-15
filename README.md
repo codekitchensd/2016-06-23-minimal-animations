@@ -21,27 +21,22 @@ Not animations, but would be great as animations
 
 #### [Light Process](http://lightprocesses.tumblr.com/)
 <img src="http://67.media.tumblr.com/432e1b5b304cd388442a7a869379bd46/tumblr_nj7pwdlGBr1tf7qzao1_500.gif" width="350">
+<img src="http://67.media.tumblr.com/a1d28afa11ccdec6f26a7dc6558264c5/tumblr_nxq0ykwu8X1tf7qzao1_540.gif" width="350">
+
+#### [Kyle Stewart](http://kylerstewart.tumblr.com/)
+<img src="http://67.media.tumblr.com/7cb52d452d098403b3b8976b50f48be4/tumblr_o56i1mkf1i1rpxw1qo1_r1_400.gif" width="350">
+<img src="http://66.media.tumblr.com/434bbc1ca0cdb7b74fafd17240ee4d46/tumblr_o5dyc6ftxf1rpxw1qo1_1280.gif" width="350">
 
 
 ## Getting Started
 
 + Copy template example `examples/00-template` into a new directory
-+ `cd` into your new directory and start a new server `python -m SimpleHTTPServer` and point your browser to http://localhost:8000
++ Open terminal and `cd` into your new directory
++ Start a new server with `python -m SimpleHTTPServer` and point your browser to http://localhost:8000
   + or simply open `index.html` in your web browser (GIF export will not work in this case)
 + Fill out methods `prepare()` and `drawFrame()` with your custom animation
 + ...
 + Profit!
-
-## 01 - Simple Animation
-Discuss how to code a scalable/time stretchable animation
-
-```javascript
-function drawFrame(perc) {
-  background(backColor);
-
-  // ....
-}
-```
 
 ### A note on GIF output
 Need to use simple HTTP server so GIFs can work - web workers don't work from `file://`

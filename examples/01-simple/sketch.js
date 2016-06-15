@@ -58,6 +58,10 @@ function drawFrame(perc) {
 // the GIF export. Stick to the above methods if you just
 // want to make cool animations.
 //==========================================================
+// settings
+var previewSize = 640;
+var renderSize = 320;
+
 // state
 var fCount = 0; // base animation on frame count
 var rendering = false; // are we generating a GIF?
@@ -172,15 +176,16 @@ function renderGIF(completion) {
   gif = new GIF({
     workers: 2,
     quality: 10,
-    width: 320,
-    height: 320,
+    width: renderSize,
+    height: renderSize,
   });
   gif.on('finished', function(blob) {
     window.open(URL.createObjectURL(blob));
 
     // reset and complete
     rendering = false;
-    resizeCanvas(640, 640);
+    resizeCanvas(previewSize, previewSize);
+    frameRate(framesPerSecond);
     prepare(); // let user code reconfigure back to original
     setTimeout(function() { // wait a bit to restart animation
       loop();
@@ -193,7 +198,8 @@ function renderGIF(completion) {
 
   // resize canvas and prep animation
   rFCount = 0;
-  resizeCanvas(320, 320);
+  resizeCanvas(renderSize, renderSize);
+  frameRate(100); // blow through frames quickly
   rendering = true; // tell main animation loop to do renders instead
   prepare(); // let user code refigure its settings based on new canvas
   loop();
