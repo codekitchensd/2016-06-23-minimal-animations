@@ -1,37 +1,62 @@
 /*
- * p5.js animation template
+ * "Sine Waves"
+ * Originaly part of my #100DaysOfGenerativeArt project
+ * https://www.instagram.com/p/BD_UcWKBBJ1
  */
 
 //== animation timing ==
 var framesPerSecond = 30;
-var numFrames = 5*framesPerSecond; // 5 seconds
+var numFrames = 4*framesPerSecond;
 
 //== animation tuning params ==
-var backColor = "#000000";
-var foreColor = "#ffffff";
-var radius;
+var backColor = "#eeeeee";
+var foreColor = "#000000";
+var lines = 12;
+var weight;
+var space;
+var maxHeight;
 
 //== Animation Setup ==
 function prepare() {
-  radius = width * 0.1;
+  maxHeight = width * 0.22;
+  weight = width * 0.05;
+  space = width * 0.02;
 
-  // prep drawing commands
-  fill(foreColor); // fill the ball with this color
-  noStroke(); // don't outline the shape
+
+  fill(foreColor);
+  noStroke();
+  rectMode(CENTER);
 }
 
 //== Single Animation Frame ==
 function drawFrame(perc) {
-  // clear frame - p5.js doesn't automatically do this for you
   background(backColor);
 
-  // move to bottom of screen
-  translate(width/2, height/2);
+  // draw lines
+  fill(foreColor);
+  translate(width/2, height/2); // move to center
+  // offset so design is centered
+  translate(((weight+space)*(lines-1.5))/-2.0, 0);
 
-  // draw circle - width is diameter (2 x radius)
-  ellipse(0, 0, radius*2.0, radius*2.0);
+  // animation timing: vary y-offset based on frame count - cycle from 0 to 2PI
+  var angle = perc * TWO_PI;
+
+  for (var i = 0; i < lines; i++) {
+    // determine column height for given angle
+    var y = maxHeight * sin(angle);
+
+    // rect: x, y, width, height
+    // drawn as current position equal to center of line
+    // draw CENTER rect mode
+    rect(-weight/2, -y, weight, y);
+
+    // move to next horizontal column position
+    translate(weight + space, 0);
+
+    // TODO: offset angle
+    angle += PI/8.0;
+  }
 }
-
 
 
 
@@ -162,6 +187,7 @@ function renderGIF(completion) {
   gif = new GIF({
     workers: 2,
     quality: 10,
+    workerScript: 'libs/gif.worker.js',
     width: renderSize,
     height: renderSize,
   });
@@ -184,7 +210,10 @@ function renderGIF(completion) {
 
   // resize canvas and prep animation
   rFCount = 0;
-  resizeCanvas(outputSize, renderSize);
+
+  var size = renderSize / window.devicePixelRatio; // figure in retina displays
+  resizeCanvas(size, size);
+
   frameRate(100); // blow through frames quickly
   rendering = true; // tell main animation loop to do renders instead
   prepare(); // let user code refigure its settings based on new canvas

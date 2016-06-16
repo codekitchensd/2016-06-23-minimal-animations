@@ -1,35 +1,52 @@
 /*
- * p5.js animation template
+ * Animation with 3D
  */
 
 //== animation timing ==
 var framesPerSecond = 30;
-var numFrames = 5*framesPerSecond; // 5 seconds
+var numFrames = 8*framesPerSecond;
 
 //== animation tuning params ==
-var backColor = "#000000";
-var foreColor = "#ffffff";
-var radius;
+var backColor = "#222222";
+var boxSize;
+var spacing;
+var gridCount = 4;
 
 //== Animation Setup ==
 function prepare() {
-  radius = width * 0.1;
-
-  // prep drawing commands
-  fill(foreColor); // fill the ball with this color
-  noStroke(); // don't outline the shape
+  boxSize = width * 0.18;
+  spacing = width * 0.12;
 }
 
 //== Single Animation Frame ==
 function drawFrame(perc) {
-  // clear frame - p5.js doesn't automatically do this for you
   background(backColor);
 
-  // move to bottom of screen
-  translate(width/2, height/2);
+  var halfSize = (boxSize+spacing)*(gridCount-1) / 2.0;
+  translate(-halfSize, -halfSize, 0);
+  var step = 0;
+  for (var col = 0; col < gridCount; col++) {
+    push();
+    for (var row = 0; row < gridCount; row++) {
+      push();
 
-  // draw circle - width is diameter (2 x radius)
-  ellipse(0, 0, radius*2.0, radius*2.0);
+      var rot = PI * sin(radians(360 * (step + perc)));
+
+      rotateX(rot);
+      rotateY(rot);
+
+      box(boxSize);
+
+      pop();
+
+      step += 0.009;
+
+      translate(boxSize + spacing, 0, 0); // move horiz to next item in row
+    }
+    pop();
+
+    translate(0, boxSize + spacing, 0); // move vert to next column
+  }
 }
 
 
@@ -59,7 +76,7 @@ var timeline;
 var play, pause;
 
 function setup() {
-  ctx = createCanvas(640, 640);
+  ctx = createCanvas(640, 640, WEBGL); // customized
   ctx.parent('renderView');
 
   // prep UI
@@ -187,7 +204,7 @@ function renderGIF(completion) {
 
   var size = renderSize / window.devicePixelRatio; // figure in retina displays
   resizeCanvas(size, size);
-  
+
   frameRate(100); // blow through frames quickly
   rendering = true; // tell main animation loop to do renders instead
   prepare(); // let user code refigure its settings based on new canvas

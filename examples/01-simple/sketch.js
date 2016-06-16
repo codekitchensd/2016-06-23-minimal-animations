@@ -198,7 +198,10 @@ function renderGIF(completion) {
 
   // resize canvas and prep animation
   rFCount = 0;
-  resizeCanvas(renderSize, renderSize);
+
+  var size = renderSize / window.devicePixelRatio; // figure in retina displays
+  resizeCanvas(size, size);
+
   frameRate(100); // blow through frames quickly
   rendering = true; // tell main animation loop to do renders instead
   prepare(); // let user code refigure its settings based on new canvas

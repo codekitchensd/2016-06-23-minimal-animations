@@ -16,7 +16,7 @@ What we are doing today
 ![02-waves](examples/02-waves/output.gif)
 ![03-square](examples/03-square/output.gif)
 ![04-moons](examples/04-moons/output.gif)
-![05-moons](examples/05-????/output.gif)
+![05-cubes](examples/05-cubes/output.gif)
 
 How to copy repo
 
