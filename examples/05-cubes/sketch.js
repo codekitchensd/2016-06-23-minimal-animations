@@ -14,8 +14,8 @@ var gridCount = 4;
 
 //== Animation Setup ==
 function prepare() {
-  boxSize = width * 0.18;
-  spacing = width * 0.12;
+  boxSize = 2.0 * width * 0.18;
+  spacing = 2.0 * width * 0.12;
 }
 
 //== Single Animation Frame ==
