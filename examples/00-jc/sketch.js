@@ -12,6 +12,10 @@ var foreColor = "#ffffff";
 var radius;
 
 var mic;
+var m;
+var useLiveLerp = true;
+var lerpAmount = 0;
+var lerpNoise = 0;
 
 //== Animation Setup ==
 function prepare() {
@@ -23,6 +27,8 @@ function prepare() {
 
   mic = new p5.AudioIn()
   mic.start();
+  
+  m = new Morpher();
 }
 
 //== Single Animation Frame ==
@@ -30,21 +36,134 @@ function drawFrame(perc) {
   // clear frame - p5.js doesn't automatically do this for you
   background(backColor);
 
-  push();
-  // move to bottom of screen
+  // AUDIO
+  micLevel = mic.getLevel();
+  // Draw rect to visualize mic level.
+  var boostedMicLevel = micLevel * 2;
+  var w = map(boostedMicLevel, 0.0, 1.0, 0, width);
+  rect(0, 0, w, 20);
+  textSize(16);
+  text('mic level', 5, 40);
+
   translate(width/2, height/2);
 
-  // draw circle - width is diameter (2 x radius)
-  ellipse(0, 0, radius*2.0, radius*2.0);
+  // SHAPES
+  // lerpAmount = map(mouseX, 0, width, 0, 1);
+  if (useLiveLerp) {
+console.log(micLevel);
+    if (micLevel > 0.4 ) {
+      lerpAmount = 1;
+      useLiveLerp = false;
+    } else {
+      lerpNoise = (micLevel*0.6) * random(1);
+      lerpAmount = micLevel + lerpNoise;
+    }
+  }
+
+console.log(useLiveLerp);
+  push();
+    m.show();
+    m.update();
   pop();
 
-  micLevel = mic.getLevel();
-  push();
-  ellipse(width/2, constrain(height-micLevel*height*5, 0, height), 10, 10);
-  pop();
 }
 
+var Morpher = function() {
+  
+  var that = {};
+  
+  var circle = [];
+  var total = 100;
+  var da = TWO_PI/total;
+  var r = 100;
+  var newAngle = TWO_PI - (PI * 3/4);
 
+  var square = [];
+  var side = total/4;
+  var y;
+
+  var current = [];
+
+  // Circle
+  for (var a = 0; a < TWO_PI; a += da) {
+    var point = createVector(cos(newAngle), sin(newAngle));
+    point.mult(r);
+    circle.push(point);
+    newAngle += da;
+  }
+
+  // Square
+  var x = -r;
+  for (var i = 0; i < side; i++) {
+    var point = createVector(x, -r);
+    x += r*2 / side;
+    square.push(point);
+  }
+  var y = -r;
+  for (var i = 0; i < side; i++) {
+    var point = createVector(r, y);
+    y += r*2 / side;
+    square.push(point);
+  }
+  var x = r;
+  for (var i = 0; i < side; i++) {
+    var point = createVector(x, r);
+    x -= r*2 / side;
+    square.push(point);
+  }
+  var y = r;
+  for (var i = 0; i < side; i++) {
+    var point = createVector(-r, y);
+    y -= r*2 / side;
+    square.push(point);
+  }
+
+  // Current (mix of circle + square)
+  square.forEach(function(e, i) {
+    current.push(e.copy());
+  });
+
+console.log('circle.length:');
+console.log(circle);
+console.log('square.length:');
+console.log(square);
+
+  var show = function() {
+    
+    // beginShape();
+    // circle.forEach(function(e, i) {
+    //   vertex(e.x, e.y);
+    // });
+    // endShape(CLOSE);
+
+    // beginShape();
+    // square.forEach(function(e, i) {
+    //   vertex(e.x, e.y);
+    // });
+    // endShape(CLOSE);
+
+    beginShape();
+    current.forEach(function(e, i) {
+      vertex(e.x, e.y);
+    });
+    endShape(CLOSE);
+
+  }
+
+  var update = function() {
+    for (var i = 0; i < current.length; i++) {
+      var cv = circle[i];
+      var sv = square[i];
+      var v = p5.Vector.lerp(cv, sv, lerpAmount);
+      current[i] = v;
+    }
+  }
+
+  that.show = show;
+  that.update = update;
+  return that;
+
+}
 
 
 
