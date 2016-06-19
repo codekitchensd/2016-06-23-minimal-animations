@@ -42,3 +42,12 @@ Not animations, but would be great as animations
 Need to use simple HTTP server so GIFs can work - web workers don't work from `file://`
 
     $ python -m SimpleHTTPServer
+
+### Resources
+
+- More GIF'spiration
+	- https://www.pinterest.com/source/patakk.tumblr.com/
+	- https://www.pinterest.com/source/nicolassassoon.com/
+	- https://www.pinterest.com/source/dvdp.tumblr.com/
+	- https://www.pinterest.com/source/beesandbombs.tumblr.com/
+
