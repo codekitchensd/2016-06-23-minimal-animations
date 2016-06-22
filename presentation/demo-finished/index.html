@@ -1,0 +1,89 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <script language="javascript" type="text/javascript" src="libs/gif.worker.js"></script>
+  <script language="javascript" type="text/javascript" src="libs/gif.js"></script>
+  <script language="javascript" type="text/javascript" src="libs/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <style>
+    body {padding: 0; margin: 0; background: #501b4a; font-family: sans-serif;}
+    .container {
+      margin: 48px auto;
+      position: relative;
+      display: block;
+      width: 320px;
+      padding: 12px;
+    }
+    #renderView {
+      width: 320px;
+      height: 320px;
+    }
+    #renderView canvas {
+    }
+    #export-toast {
+      display: none;
+      position: absolute;
+      top: 12px;
+      color: #fff;
+      background: rgba(0,0,0,0.6);
+      height: 320;
+      width: 320;
+      font-size: 32px;
+      line-height: 320px;
+      text-align: center;
+    }
+    .controls {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+    }
+    .timeline-track {
+      width: 100%;
+      height: 12px;
+      background: #222;
+    }
+    #timeline {
+      width: 100%;
+      height: 12px;
+      background: #3eb9bb;
+    }
+    .controls .buttons {
+      text-align: center;
+      padding: 18px;
+    }
+    a.player-button {
+      color: #3eb9bb;
+      font-size: 48px;
+      text-decoration: none;
+      padding: 6px;
+    }
+  </style>
+</head>
+
+  <div class="container">
+    <div id="renderView"></div>
+    <div id="export-toast">Exporting GIF...</div>
+    <div class="controls">
+      <div class="timeline-track">
+        <div id="timeline"></div>
+      </div>
+      <div class="buttons">
+        <a href="#" class="player-button" id="rewind">
+          <i class="fa fa-fast-backward" aria-hidden="true"></i>
+        </a>
+        <a href="#" class="player-button" id="play">
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </a>
+        <a href="#" class="player-button" id="pause">
+          <i class="fa fa-pause" aria-hidden="true"></i>
+        </a>
+        <a href="#" class="player-button" id="export">
+          <i class="fa fa-share" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+<body>
+</body>
+</html>

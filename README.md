@@ -38,7 +38,26 @@ Not animations, but would be great as animations
 + ...
 + Profit!
 
+## Examples
+Projects included in the `examples` folder (with hopefully enough comments to make sense)
+
+![01-simple](examples/01-simple/output.gif)
+![02-waves](examples/02-waves/output.gif)
+
+![03-square](examples/03-square/output.gif)
+![04-moons](examples/04-moons/output.gif)
+
+![05-cubes](examples/05-cubes/output.gif)
+
+### Code Kitchen Live Coding Example [June 23rd 2016]
+Today we are going to create...
+
+![05-cubes](presentation/demo/output.gif)
+
 ### A note on GIF output
-Need to use simple HTTP server so GIFs can work - web workers don't work from `file://`
+We need to use a simple HTTP server in order for GIF export to work - web workers don't work from `file://` due to browser security.
 
     $ python -m SimpleHTTPServer
+
+__Some issues exist with export on retina displays__  
+Haven't quite solved these yet, sorry.
