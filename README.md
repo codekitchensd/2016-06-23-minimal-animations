@@ -52,7 +52,7 @@ Projects included in the `examples` folder (with hopefully enough comments to ma
 ### Code Kitchen Live Coding Example [June 23rd 2016]
 Today we are going to create...
 
-![05-cubes](presentation/demo/output.gif)
+![demo](presentation/demo-finished/output.gif)
 
 ### A note on GIF output
 We need to use a simple HTTP server in order for GIF export to work - web workers don't work from `file://` due to browser security.
