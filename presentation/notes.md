@@ -7,6 +7,7 @@ What we are doing today
   - rendering
   - perfect loops
   - file size nightmares (Tumblr / Instagram)
+  - finding inspirations ( Books: "Generative Design", "Nature of Code", Tumblr: links in repo)
 + Solved most of those problems using p5.js
 + Going to be doing a livecoding example
 
